@@ -6,7 +6,7 @@
         <div class="name">
           {{ food.name }}
         </div>
-        <span class="favourite {{ food.favorite ? '' : 'not' }}"> ❤️ </span>
+        <span class="favourite {{ food.favorite ? '' : 'not' }}"> ❤ </span>
         <div class="stars">
           <star-rating [stars]="food.stars"></star-rating>
         </div>
@@ -23,9 +23,9 @@
         </div>
 
         <div class="price">
-            <span>
-                {{ food.price | currency}}
-            </span>
+          <span>
+            {{ food.price | currency }}
+          </span>
         </div>
       </div>
     </a>
