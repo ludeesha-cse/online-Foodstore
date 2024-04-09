@@ -9,3 +9,6 @@
    4. Add images to assets
    5. Create Food service
    6. Create Home component
+
+
+6. Search bar
