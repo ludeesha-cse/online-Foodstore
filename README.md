@@ -11,4 +11,12 @@
    6. Create Home component
 
 
-6. Search bar
+3. Search bar
+   Add method to Food service
+   Add search route
+   Show search result in Home component
+   Generate search component
+   Add to home component
+   Add ts
+   Add html
+   Add css

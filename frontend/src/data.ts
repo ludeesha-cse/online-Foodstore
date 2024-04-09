@@ -1,6 +1,5 @@
 import {Food} from './app/shared/models/Food';
 
-
 export const sample_foods: Food[] = [
   {
     id:'1',
