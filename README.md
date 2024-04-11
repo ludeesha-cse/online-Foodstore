@@ -22,6 +22,7 @@
    Add css
 
 4. Tags Bar
+
    1. Create Tag model
    2. Add sample tags to data.ts
    3. Food service
@@ -31,5 +32,9 @@
    5. Show tag result in Home component
    6. Generate Tags component
       1. Add to home component
-      2. Add ts
-      3. Add html
+
+5. Food Page
+
+   1. Add method to food service
+   2. Generate Food Page component
+      1. Add Route(Rouuter link to the components and app-routing.module)
