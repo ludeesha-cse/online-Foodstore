@@ -47,3 +47,11 @@
    4. Add to Cart Button in Food Page
    5. Generate Cart page component
       1. Add Route
+
+7. Not Found!
+
+   1. Generate Component
+   2. Add To Pages
+      1. Home Page
+      2. Food Page
+      3. Cart Page
