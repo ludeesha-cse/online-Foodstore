@@ -24,7 +24,12 @@ export class HeaderComponent {
     this.userService.logout();
   }
 
-  get isAuth(){
-    return this.user?.token;
+  // get isAuth(){
+  //   console.log(this.user.token);
+  //   return this.user.token;
+  // }
+    get isAuth(){
+    
+    return this.user.id;
   }
 } 
