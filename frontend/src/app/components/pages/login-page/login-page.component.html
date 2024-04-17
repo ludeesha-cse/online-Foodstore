@@ -24,6 +24,12 @@
         // <button type="submit" [disabled]="!loginForm.valid">Login</button> 
         <button type="submit">Login</button>
       </div> -->
+      <div class="register">
+        New User? &nbsp;
+        <a routerLink="/register" [queryParams]="{ returnUrl: returnUrl }">
+          Register Here
+        </a>
+      </div>
     </form>
   </div>
 </div>

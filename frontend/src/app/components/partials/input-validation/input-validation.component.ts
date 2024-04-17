@@ -1,9 +1,12 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { min } from 'rxjs';
 
 const VALIDATORS_MESSAGES:any = {
   required:'This field is required',
   email:'Invalid email',
+  minlength:'Minimum length is 6',
+  notMatch : "Password doesn't match"
 }
 @Component({
   selector: 'input-validation',
