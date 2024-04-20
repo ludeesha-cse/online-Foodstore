@@ -43,6 +43,6 @@ export class HeaderComponent {
   //   return this.user.token;
   // }
   get isAuth() {
-    return this.user.id;
+    return this.user.token;
   }
 }
