@@ -27,6 +27,7 @@ export class CheckoutPageComponent {
 
   ngOnInit(): void {
     let { name, address } = this.userService.currentUser;
+    //console.log(this.userService.currentUser.token);
     this.checkoutForm = this.formBuilder.group({
       name: [name, Validators.required],
       address: [address, Validators.required],

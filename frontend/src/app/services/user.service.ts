@@ -23,6 +23,7 @@ export class UserService {
   }
 
   public get currentUser(): User{
+    //console.log(this.userSubject.value.token);
     return this.userSubject.value;
   }
 
@@ -77,6 +78,7 @@ export class UserService {
   private getUserFromLocalStorage(): User {
     const userJson = localStorage.getItem(USER_KEY);
     if (userJson) {
+      
       return JSON.parse(userJson) as User;
     }
     return new User();
