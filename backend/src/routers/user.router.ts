@@ -31,9 +31,9 @@ router.post(
     //     user.email.toLowerCase() === emailLowercase && user.password === password
     // );
 
-    const user = await UserModel.findOne({ email, password });
+    const user = await UserModel.findOne({ email });
 
-    if (user) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       res.send(generateTokenResponse(user));
     } else {
       res.status(HTTP_BAD_REQUEST).send("Invalid email or password");

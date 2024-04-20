@@ -22,6 +22,11 @@ export class UserService {
     this.userObservable = this.userSubject.asObservable();
   }
 
+  public get currentUser(): User{
+    //console.log(this.userSubject.value.token);
+    return this.userSubject.value;
+  }
+
   login(userLogin: IUserLogin): Observable<User> {
     return this.http.post<User>(USER_LOGIN_URL, userLogin).pipe(
       tap({
@@ -64,6 +69,8 @@ export class UserService {
     window.location.reload();
   }
 
+  
+
   private setUserToLocalStorage(user: User) {
     localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
@@ -71,6 +78,7 @@ export class UserService {
   private getUserFromLocalStorage(): User {
     const userJson = localStorage.getItem(USER_KEY);
     if (userJson) {
+      
       return JSON.parse(userJson) as User;
     }
     return new User();
