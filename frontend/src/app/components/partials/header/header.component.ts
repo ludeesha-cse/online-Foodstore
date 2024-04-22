@@ -13,12 +13,13 @@ export class HeaderComponent {
   cartQuantity = 0;
   user!: User;
   returnUrl: string = '';
+  isAdmin: boolean = false;
 
   constructor(
     cartService: CartService,
     private userService: UserService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {
     cartService
       .getCartObservable()
@@ -31,6 +32,8 @@ export class HeaderComponent {
     this.activatedRoute.queryParams.subscribe(params => {
       this.returnUrl = params['returnUrl'];
     });
+
+    this.isAdmin = this.userService.isAdmin;
   }
 
   logout() {

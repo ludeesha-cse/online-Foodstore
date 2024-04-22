@@ -11,6 +11,7 @@
           <div class="menu">
             <a routerLink="/profile">Profile</a>
             <a routerLink="/orders">Orders</a>
+            <a *ngIf="!isAdmin" routerLink="/admin">Admin Page</a>
             <a (click)="logout()">Logout</a>
           </div>
         </li>

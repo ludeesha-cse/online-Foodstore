@@ -30,6 +30,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { PaymentPageComponent } from './components/pages/payment-page/payment-page.component';
 import { PaypalButtonComponent } from './components/partials/paypal-button/paypal-button.component';
 import { AdminPageComponent } from './components/pages/admin-page/admin-page.component';
+import { ProfileComponent } from './components/pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { AdminPageComponent } from './components/pages/admin-page/admin-page.com
     PaymentPageComponent,
     PaypalButtonComponent,
     AdminPageComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
