@@ -6,20 +6,32 @@ import { HttpClient } from '@angular/common/http';
 import { USER_LOGIN_URL, USER_REGISTER_URL } from '../shared/constants/urls';
 import { ToastrService } from 'ngx-toastr';
 import { IUserRegister } from '../shared/interfaces/iUserReguster';
+import { JwtDecoderService } from './jwt-decoder.service';
 
 const USER_KEY = 'User';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+
   private userSubject = new BehaviorSubject<User>(
     this.getUserFromLocalStorage()
   );
 
   public userObservable: Observable<User>;
 
-  constructor(private http: HttpClient, private toastRService: ToastrService) {
+  constructor(private http: HttpClient, private toastRService: ToastrService, private jwtDecoderService: JwtDecoderService) {
+
     this.userObservable = this.userSubject.asObservable();
+    // const user = localStorage.getItem('User');
+    // if(user){
+    //   const token = (JSON.parse(user) as User).token;
+    //   const decodedToken = jwtDecoderService.decodeToken(token);
+    // }
+  }
+
+  public get isAdmin(): boolean {
+    return this.userSubject.value.isAdmin;
   }
 
   public get currentUser(): User{
