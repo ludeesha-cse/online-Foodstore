@@ -10,6 +10,7 @@ import { authGuard } from './auth/guards/auth.guard';
 import { PaymentPageComponent } from './components/pages/payment-page/payment-page.component';
 import { AdminPageComponent } from './components/pages/admin-page/admin-page.component';
 import { adminAuthGuard } from './auth/guards/admin-auth.guard';
+import { ProfileComponent } from './components/pages/profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,7 +30,12 @@ const routes: Routes = [
     component: PaymentPageComponent,
     canActivate: [authGuard],
   },
-  { path: 'admin', component: AdminPageComponent, canActivate: [authGuard, adminAuthGuard] },
+  {
+    path: 'admin',
+    component: AdminPageComponent,
+    canActivate: [authGuard, adminAuthGuard],
+  },
+  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
 ];
 
 @NgModule({

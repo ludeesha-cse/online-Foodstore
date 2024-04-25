@@ -3,10 +3,11 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../shared/models/User';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { HttpClient } from '@angular/common/http';
-import { USER_LOGIN_URL, USER_REGISTER_URL } from '../shared/constants/urls';
+import { USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL } from '../shared/constants/urls';
 import { ToastrService } from 'ngx-toastr';
 import { IUserRegister } from '../shared/interfaces/iUserReguster';
 import { JwtDecoderService } from './jwt-decoder.service';
+import { IUserUpdate } from '../shared/interfaces/IUserUpdate';
 
 const USER_KEY = 'User';
 @Injectable({
@@ -49,6 +50,7 @@ export class UserService {
             `Welcome to FoodStore ${user.email}!`,
             'Login Successful'
           );
+          console.log(this.currentUser);
         },
         error: (errorResponse) => {
           this.toastRService.error(errorResponse.error, 'Login Failed');
@@ -81,7 +83,23 @@ export class UserService {
     window.location.reload();
   }
 
-  
+  updateUser(user: IUserUpdate): Observable<User>{
+    return this.http.post<User>(USER_UPDATE_URL, user).pipe(
+      tap({
+        next: (user) => {
+          this.setUserToLocalStorage(user);
+          this.userSubject.next(user);
+          this.toastRService.success(
+            `Welcome to FoodStore ${user.email}!`,
+            'Update Successful'
+          );
+        },
+        error: (errorResponse) => {
+          this.toastRService.error(errorResponse.error, 'Update Failed');
+        },
+      })
+    );
+  }
 
   private setUserToLocalStorage(user: User) {
     localStorage.setItem(USER_KEY, JSON.stringify(user));
