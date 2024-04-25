@@ -34,7 +34,7 @@ router.post(
     const user = await UserModel.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      res.send(generateTokenResponse(user,req, res));
+      res.send(generateTokenResponse(user, req, res));
     } else {
       res.status(HTTP_BAD_REQUEST).send("Invalid email or password");
     }
@@ -68,6 +68,39 @@ router.post(
   })
 );
 
+router.post(
+  "/update",
+  asyncHandler(async (req:any, res:any) => {
+    const { id, name, email, address } = req.body;
+
+    try {
+      // Check if the user with the given id exists in the database
+      const user = await UserModel.updateOne({_id:id}, {name, email, address});
+      // console.log(user);
+
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      // Update user fields
+      // if (name) user.name = name;
+      // if (email) user.email = email.toLowerCase();
+      // if (address) user.address = address;
+      
+
+      // Save the updated user to the database
+      // const updatedUser = await user.save();
+
+      // Optionally, you can generate and send a new token response here if needed
+
+      res.send(user);
+    } catch (error) {
+      console.error("Error updating user:", error);
+      res.status(400).send("Error updating user");
+    }
+  })
+);
+
 const generateTokenResponse = (user: User, req: any, res: any) => {
   const token = jwt.sign(
     {
@@ -79,7 +112,11 @@ const generateTokenResponse = (user: User, req: any, res: any) => {
     { expiresIn: "1d" }
   );
 
-  res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: 24*60*60*1000 })
+  res.cookie("jwt", token, {
+    httpOnly: true,
+    secure: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  });
   user.token = token;
   //console.log(token)
   return user;
