@@ -3,7 +3,11 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../shared/models/User';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { HttpClient } from '@angular/common/http';
-import { USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL } from '../shared/constants/urls';
+import {
+  USER_LOGIN_URL,
+  USER_REGISTER_URL,
+  USER_UPDATE_URL,
+} from '../shared/constants/urls';
 import { ToastrService } from 'ngx-toastr';
 import { IUserRegister } from '../shared/interfaces/iUserReguster';
 import { JwtDecoderService } from './jwt-decoder.service';
@@ -14,15 +18,17 @@ const USER_KEY = 'User';
   providedIn: 'root',
 })
 export class UserService {
-
   private userSubject = new BehaviorSubject<User>(
     this.getUserFromLocalStorage()
   );
 
   public userObservable: Observable<User>;
 
-  constructor(private http: HttpClient, private toastRService: ToastrService, private jwtDecoderService: JwtDecoderService) {
-
+  constructor(
+    private http: HttpClient,
+    private toastRService: ToastrService,
+    private jwtDecoderService: JwtDecoderService
+  ) {
     this.userObservable = this.userSubject.asObservable();
     // const user = localStorage.getItem('User');
     // if(user){
@@ -35,28 +41,30 @@ export class UserService {
     return this.userSubject.value.isAdmin;
   }
 
-  public get currentUser(): User{
+  public get currentUser(): User {
     //console.log(this.userSubject.value.token);
     return this.userSubject.value;
   }
 
   login(userLogin: IUserLogin): Observable<User> {
-    return this.http.post<User>(USER_LOGIN_URL, userLogin).pipe(
-      tap({
-        next: (user) => {
-          this.setUserToLocalStorage(user);
-          this.userSubject.next(user);
-          this.toastRService.success(
-            `Welcome to FoodStore ${user.email}!`,
-            'Login Successful'
-          );
-          console.log(this.currentUser);
-        },
-        error: (errorResponse) => {
-          this.toastRService.error(errorResponse.error, 'Login Failed');
-        },
-      })
-    );
+    return this.http
+      .post<User>(USER_LOGIN_URL, userLogin, { withCredentials: true })
+      .pipe(
+        tap({
+          next: (user) => {
+            this.setUserToLocalStorage(user);
+            this.userSubject.next(user);
+            this.toastRService.success(
+              `Welcome to FoodStore ${user.email}!`,
+              'Login Successful'
+            );
+            console.log(this.currentUser);
+          },
+          error: (errorResponse) => {
+            this.toastRService.error(errorResponse.error, 'Login Failed');
+          },
+        })
+      );
   }
 
   register(userRegister: IUserRegister): Observable<User> {
@@ -83,8 +91,8 @@ export class UserService {
     window.location.reload();
   }
 
-  updateUser(user: IUserUpdate): Observable<User>{
-    return this.http.post<User>(USER_UPDATE_URL, user).pipe(
+  updateUser(user: IUserUpdate): Observable<User> {
+    return this.http.post<User>(USER_UPDATE_URL, user, { withCredentials: true }).pipe(
       tap({
         next: (user) => {
           this.setUserToLocalStorage(user);
@@ -108,7 +116,6 @@ export class UserService {
   private getUserFromLocalStorage(): User {
     const userJson = localStorage.getItem(USER_KEY);
     if (userJson) {
-      
       return JSON.parse(userJson) as User;
     }
     return new User();

@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-
 import express from "express";
 import cors from "cors";
+import cookieParser from 'cookie-parser';
 import foodRouter from "./routers/food.router"
 import userRouter from "./routers/user.router"
 import orderRouter from "./routers/order.router"
@@ -14,6 +14,7 @@ dbConnect();
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 // app.use(
 //   cors({
@@ -24,7 +25,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:4200"],
+    origin: ["http://localhost:4200","https://online-foodstore-1.onrender.com"],
   })
 );
 

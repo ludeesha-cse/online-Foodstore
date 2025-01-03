@@ -117,6 +117,7 @@ const generateTokenResponse = (user: User, req: any, res: any) => {
     secure: true,
     maxAge: 24 * 60 * 60 * 1000,
   });
+  
   user.token = token;
   //console.log(token)
   return user;
