@@ -32,9 +32,9 @@ app.use(
 
 app.use("/api/foods", foodRouter);
 
-app.use("/api/users",userRouter)
+app.use("/api/users",userRouter);
 
-app.use("/api/orders",orderRouter)
+app.use("/api/orders",orderRouter);
 
 const port = 5000;
 
