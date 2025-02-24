@@ -89,6 +89,7 @@ export class UserService {
   logout() {
     this.userSubject.next(new User());
     localStorage.removeItem(USER_KEY);
+    localStorage.clear();
     window.location.reload();
   }
 

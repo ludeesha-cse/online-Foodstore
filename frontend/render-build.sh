@@ -1,7 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
-# Generate environment.prod.ts file
-echo "Generating environment.prod.ts file..."
+# Create environment.ts file
+echo "Creating environment.ts file..."
+cat <<EOF > src/environments/environment.ts
+export const environment = {
+  production: false,
+  BASE_URL: "$BASE_URL"
+};
+EOF
+
+# Create environment.prod.ts file
+echo "Creating environment.prod.ts file..."
 cat <<EOF > src/environments/environment.prod.ts
 export const environment = {
   production: true,
@@ -15,4 +24,3 @@ npm install
 
 echo "Building Angular app..."
 npm run build -- --configuration production
-
