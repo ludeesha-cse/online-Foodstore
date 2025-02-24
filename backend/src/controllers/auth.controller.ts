@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
 import { User, UserModel } from "../models/user.model";
 import asyncHandler from "express-async-handler";
 import { HTTP_BAD_REQUEST } from "../constants/http_status";
 import bcrypt from "bcryptjs";
+import generateTokenResponse from "../utils/generateToken";
 
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -45,24 +45,3 @@ export const register = asyncHandler(async (req, res) => {
     res.send(generateTokenResponse(dbUser, req, res));
   })
 
-const generateTokenResponse = (user: User, req: any, res: any) => {
-  const token = jwt.sign(
-    {
-      id: user.id,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    },
-    process.env.JWT_SECRET!, // Replace with a valid secret or private key
-    { expiresIn: "1d" }
-  );
-  user.token = token;
-
-  res.cookie("jwt", token, {
-    httpOnly: true,
-    secure: true,
-    maxAge: 24 * 60 * 60 * 1000,
-  });
-
-  //console.log(token)
-  return user;
-};

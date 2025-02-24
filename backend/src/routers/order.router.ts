@@ -1,8 +1,4 @@
-import asyncHandler from "express-async-handler";
 import { Router } from "express";
-import { HTTP_BAD_REQUEST } from "../constants/http_status";
-import { OrderModel } from "../models/order.model";
-import { OrderStatus } from "../constants/order_status";
 import auth from "../middlewares/auth.mid";
 import { createOrder, getOrder } from "../controllers/order.controller";
 
