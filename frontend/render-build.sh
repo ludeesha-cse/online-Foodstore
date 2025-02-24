@@ -10,4 +10,4 @@ EOF
 
 echo "Building Angular app..."
 npm install
-npm run build -- --prod
+npm run build
