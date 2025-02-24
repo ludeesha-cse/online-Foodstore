@@ -1,5 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
+# Create environment.ts file
 echo "Creating environment.ts file..."
 cat <<EOF > src/environments/environment.ts
 export const environment = {
