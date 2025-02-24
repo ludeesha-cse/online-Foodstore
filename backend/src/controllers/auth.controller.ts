@@ -22,26 +22,25 @@ export const login = asyncHandler(async (req, res) => {
 });
 
 export const register = asyncHandler(async (req, res) => {
-    const { name, email, password, address } = req.body;
-    const user = await UserModel.findOne({ email });
-    if (user) {
-      res.status(HTTP_BAD_REQUEST).send("User already exists");
-      return;
-    }
+  const { name, email, password, address } = req.body;
+  const user = await UserModel.findOne({ email });
+  if (user) {
+    res.status(HTTP_BAD_REQUEST).send("User already exists");
+    return;
+  }
 
-    const encryptedPassword = await bcrypt.hash(password, 10);
+  const encryptedPassword = await bcrypt.hash(password, 10);
 
-    const newUser: User = {
-      id: "",
-      name,
-      email: email.toLowerCase(),
-      password: encryptedPassword,
-      address,
-      isAdmin: false,
-      token: "",
-    };
+  const newUser: User = {
+    id: "",
+    name,
+    email: email.toLowerCase(),
+    password: encryptedPassword,
+    address,
+    isAdmin: false,
+    token: "",
+  };
 
-    const dbUser = await UserModel.create(newUser);
-    res.send(generateTokenResponse(dbUser, req, res));
-  })
-
+  const dbUser = await UserModel.create(newUser);
+  res.send(generateTokenResponse(dbUser, req, res));
+});
