@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Generate environment.prod.ts file
 echo "Generating environment.prod.ts file..."
 cat <<EOF > src/environments/environment.prod.ts
 export const environment = {
@@ -8,6 +9,10 @@ export const environment = {
 };
 EOF
 
-echo "Building Angular app..."
+# Install dependencies and build the Angular app
+echo "Installing dependencies..."
 npm install
-npm run build -- --prod
+
+echo "Building Angular app..."
+npm run build -- --configuration production
+
