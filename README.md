@@ -26,10 +26,11 @@ This is a full-stack web application for an online food ordering system built wi
 
 ## Getting Started
 1. Clone the repository
-2. Install dependencies using `npm install`
-3. Run frontend with `ng serve`
-4. Start backend server
-5. Access the application at `http://localhost:4200`
+2. select node version 18.10.0
+3. Install dependencies using `npm install`
+4. Run frontend with `ng serve`
+5. Start backend server
+6. Access the application at `http://localhost:4200`
 
 ## Link
 [Online Foodstore](https://online-foodstore-1.onrender.com/)
