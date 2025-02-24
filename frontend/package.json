@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "chmod": "^0.2.1",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
     "ngx-toastr": "^18.0.0",
