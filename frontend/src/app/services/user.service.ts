@@ -14,6 +14,7 @@ import { JwtDecoderService } from './jwt-decoder.service';
 import { IUserUpdate } from '../shared/interfaces/IUserUpdate';
 
 const USER_KEY = 'User';
+
 @Injectable({
   providedIn: 'root',
 })
