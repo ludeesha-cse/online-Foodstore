@@ -1,6 +1,6 @@
 // const BASE_URL = 'http://192.168.8.103:5000';
 // const BASE_URL = 'https://online-foodstore-ms92.onrender.com';
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
 
 const BASE_URL = environment.BASE_URL;
 
