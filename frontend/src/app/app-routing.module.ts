@@ -6,10 +6,10 @@ import { CartPageComponent } from './components/pages/cart-page/cart-page.compon
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
 import { CheckoutPageComponent } from './components/pages/checkout-page/checkout-page.component';
-import { authGuard } from './auth/guards/auth.guard';
+import { authGuard } from './guards/auth.guard';
 import { PaymentPageComponent } from './components/pages/payment-page/payment-page.component';
 import { AdminPageComponent } from './components/pages/admin-page/admin-page.component';
-import { adminAuthGuard } from './auth/guards/admin-auth.guard';
+import { adminAuthGuard } from './guards/admin-auth.guard';
 import { ProfileComponent } from './components/pages/profile/profile.component';
 
 const routes: Routes = [

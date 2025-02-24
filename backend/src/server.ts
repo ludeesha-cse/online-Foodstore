@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import foodRouter from "./routers/food.router"
 import userRouter from "./routers/user.router"
 import orderRouter from "./routers/order.router"
+import authRouter from "./routers/auth.router";
 
 import { dbConnect } from "./configs/database.config";
 
@@ -32,9 +33,11 @@ app.use(
 
 app.use("/api/foods", foodRouter);
 
-app.use("/api/users",userRouter)
+app.use("/api/auth", authRouter);
 
-app.use("/api/orders",orderRouter)
+app.use("/api/users",userRouter);
+
+app.use("/api/orders",orderRouter);
 
 const port = 5000;
 

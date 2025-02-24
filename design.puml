@@ -1,0 +1,51 @@
+@startuml
+
+skinparam linetype ortho
+
+actor Client as "Client (Frontend)\n(Angular)"
+
+rectangle "Presentation Layer\n(REST API - Express)" {
+    rectangle "Routers" {
+        rectangle "food.router.ts" 
+        rectangle "user.router.ts" 
+        rectangle "order.router.ts" 
+    }
+}
+
+rectangle "Application Layer\n(Business Logic)" {
+    rectangle "Middleware" {
+        rectangle "auth.mid.ts" 
+        rectangle "Error Handling" 
+    }
+    rectangle "Controllers"
+}
+
+rectangle "Data Access Layer\n(Mongoose)" {
+    rectangle "Models" {
+        rectangle "food.model.ts" 
+        rectangle "user.model.ts" 
+        rectangle "order.model.ts" 
+    }
+}
+
+rectangle "Database Layer\n(MongoDB Atlas)" {
+    database "MongoDB Atlas"
+}
+
+rectangle "Utility Layer" {
+    rectangle "Helpers & Config" {
+        rectangle "database.config.ts" 
+        rectangle ".env"
+    }
+}
+
+Client --> "Presentation Layer\n(REST API - Express)": HTTP Request
+"Presentation Layer\n(REST API - Express)" --> "Application Layer\n(Business Logic)": Route Handling
+"Application Layer\n(Business Logic)" --> "Data Access Layer\n(Mongoose)": Query Execution
+"Data Access Layer\n(Mongoose)" --> "Database Layer\n(MongoDB Atlas)": CRUD Operations
+"Database Layer\n(MongoDB Atlas)" --> "Data Access Layer\n(Mongoose)": Response
+"Data Access Layer\n(Mongoose)" --> "Application Layer\n(Business Logic)": Data Processing
+"Application Layer\n(Business Logic)" --> "Presentation Layer\n(REST API - Express)": Response
+"Presentation Layer\n(REST API - Express)" --> Client: HTTP Response
+
+@enduml
