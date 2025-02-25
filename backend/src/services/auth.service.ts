@@ -33,13 +33,6 @@ export const registerUser = async (
   return { user: newUser, token };
 };
 
-export const comparePasswords = async (
-  password: string,
-  hashedPassword: string
-) => {
-  return await bcrypt.compare(password, hashedPassword);
-};
-
 export const loginUser = async (email: string, password: string) => {
   const lowercaseEmail = email.toLowerCase();
   const user = await UserModel.findOne({ email: lowercaseEmail });

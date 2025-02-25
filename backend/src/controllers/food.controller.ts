@@ -1,40 +1,61 @@
 import asyncHandler from "express-async-handler";
-import { FoodModel } from "../models/food.model";
+import {
+  findFoods,
+  getFoods,
+  getFoodsByID,
+  getFoodsByTag,
+  getTagTypes,
+} from "../services/food.service";
 
 export const getAllFoods = asyncHandler(async (req, res) => {
-  const foods = await FoodModel.find();
-  res.send(foods);
+  try {
+    // Call the service to get all foods
+    const foods = await getFoods();
+
+    res.status(200).json(foods);
+  } catch (error) {
+    console.error("Error fetching foods:", error);
+    res.status(500).json({ message: "Failed to fetch foods" });
+  }
 });
 
 export const searchFoods = asyncHandler(async (req, res) => {
-  const seacrhRegx = new RegExp(req.params.searchTerm, "i"); //i -> case insensitive
-  const foods = await FoodModel.find({ name: { $regex: seacrhRegx } });
-  res.send(foods);
+  try {
+    const foods = await findFoods(req.params.searchTerm);
+    res.send(foods);
+  } catch (error) {
+    console.error("Error searching foods:", error);
+    res.status(500).json({ message: "Failed to search foods" });
+  }
 });
 
-export const getTagTypes = asyncHandler(async (req, res) => {
-  const tags = await FoodModel.aggregate([
-    { $unwind: "$tags" },
-    { $group: { _id: "$tags", count: { $sum: 1 } } },
-    { $project: { _id: 0, name: "$_id", count: "$count" } },
-    { $sort: { count: -1 } },
-  ]);
-
-  const all = {
-    name: "All",
-    count: await FoodModel.countDocuments(),
-  };
-  tags.unshift(all); // add to the begining of the tags
-  res.send(tags);
+export const getTagTypesHandler = asyncHandler(async (req, res) => {
+  try {
+    const tags = await getTagTypes(); // add to the begining of the tags
+    res.send(tags);
+  } catch (error) {
+    console.error("Error fetching tags:", error);
+    res.status(500).json({ message: "Failed to fetch tags" });
+  }
 });
 
 export const getFoodByTag = asyncHandler(async (req, res) => {
-  const foods = await FoodModel.find({ tags: req.params.tagName });
-  res.send(foods);
+  try {
+    const foods = await getFoodsByTag(req.params.tagName);
+    res.send(foods);
+  } catch (error) {
+    console.error("Error fetching foods by tag:", error);
+    res.status(500).json({ message: "Failed to fetch foods by tag" });
+  }
 });
 
 export const getFoodById = asyncHandler(async (req, res) => {
   const foodId = req.params.foodId;
-  const food = await FoodModel.findById(foodId);
-  res.send(food);
+  try {
+    const food = await getFoodsByID(foodId);
+    res.send(food);
+  } catch (error) {
+    console.error("Error fetching food by id:", error);
+    res.status(500).json({ message: "Failed to fetch food by id" });
+  }
 });
