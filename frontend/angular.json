@@ -45,12 +45,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "runtime.js",
-                "input": "src/assets/",
-                "output": "/"
-              }
+              "src/assets"
             ],
             "styles": [
               "src/styles.css",

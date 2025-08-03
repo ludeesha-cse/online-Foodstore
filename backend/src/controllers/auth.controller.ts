@@ -1,46 +1,54 @@
-import { User, UserModel } from "../models/user.model";
 import asyncHandler from "express-async-handler";
 import { HTTP_BAD_REQUEST } from "../constants/http_status";
-import bcrypt from "bcryptjs";
-import generateTokenResponse from "../utils/generateToken";
+import { Request, Response } from "express";
+import { loginUser, registerUser } from "../services/auth.service";
 
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  //const emailLowercase = email.toLowerCase();
-  // const user = sample_users.find(
-  //   (user) =>
-  //     user.email.toLowerCase() === emailLowercase && user.password === password
-  // );
-
-  const user = await UserModel.findOne({ email });
-
-  if (user && (await bcrypt.compare(password, user.password))) {
-    res.send(generateTokenResponse(user, req, res));
-  } else {
-    res.status(HTTP_BAD_REQUEST).send("Invalid email or password");
+  try {
+    const { user, token } = await loginUser(email, password);
+    user.token = token;
+    user.password = "";
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      // secure: process.env.NODE_ENV === "production",
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+    res.status(200).send(user);
+  } catch (error: any) {
+    if (error.message === "Invalid email or password") {
+      res.status(HTTP_BAD_REQUEST).json({ message: error.message });
+    } else {
+      console.error("Error logging in:", error);
+      res.status(500).json({ message: "Failed to log in" });
+    }
   }
 });
 
-export const register = asyncHandler(async (req, res) => {
+export const register = asyncHandler(async (req: Request, res: Response) => {
   const { name, email, password, address } = req.body;
-  const user = await UserModel.findOne({ email });
-  if (user) {
-    res.status(HTTP_BAD_REQUEST).send("User already exists");
-    return;
+
+  try {
+    // Call the service to register the user
+    const { user, token } = await registerUser(name, email, password, address);
+    user.token = token;
+    user.password = "";
+    // Set the token as a cookie
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: true, // Use secure cookies in production
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+    });
+
+    // Send the response
+    res.status(201).send(user);
+  } catch (error: any) {
+    if (error.message === "User already exists") {
+      res.status(400).json({ message: error.message });
+    } else {
+      console.error("Error registering user:", error);
+      res.status(500).json({ message: "Failed to register user" });
+    }
   }
-
-  const encryptedPassword = await bcrypt.hash(password, 10);
-
-  const newUser: User = {
-    id: "",
-    name,
-    email: email.toLowerCase(),
-    password: encryptedPassword,
-    address,
-    isAdmin: false,
-    token: "",
-  };
-
-  const dbUser = await UserModel.create(newUser);
-  res.send(generateTokenResponse(dbUser, req, res));
 });

@@ -6,7 +6,7 @@ import {
   getAllFoods,
   getFoodById,
   getFoodByTag,
-  getTagTypes,
+  getTagTypesHandler,
   searchFoods,
 } from "../controllers/food.controller";
 
@@ -29,7 +29,7 @@ router.get("/", getAllFoods);
 
 router.get("/search/:searchTerm", searchFoods);
 
-router.get("/tags", getTagTypes);
+router.get("/tags", getTagTypesHandler);
 
 router.get("/tag/:tagName", getFoodByTag);
 

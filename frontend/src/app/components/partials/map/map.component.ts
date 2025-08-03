@@ -77,7 +77,6 @@ export class MapComponent {
     m.boxZoom.disable();
     m.keyboard.disable();
     m.off('click');
-    m.tap?.disable();
     this.currentMarker.dragging?.disable();
   }
 
